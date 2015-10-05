@@ -22,6 +22,7 @@ class LinkedList {
     public int remove(int idx) {
         // remove item at given index
         int success=0;
+
         Node current = head;
         for (int i=0; i<idx; i++) {
             current=current.getNext();
