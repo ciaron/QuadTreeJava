@@ -9,13 +9,10 @@ class QuadTree {
     QuadTree SW;
     QuadTree SE;
 
-    // list of points in this quadtree;
+    // list of points in this quadtree; Initially empty
     ArrayList<Point> points = new ArrayList<Point>();
 
     BoundingBox bounds;
-
-    //private Node head;
-    //private int length;
 
     public QuadTree(BoundingBox _bounds, int capacity) {
         NW = null;
@@ -27,27 +24,73 @@ class QuadTree {
     }
 
     public boolean insert(Point p) {
-        // insert a point into the QuadTree
-        if (!bounds.containsPoint(p))
-            return false;
 
-        if (points.size() < CAPACITY &&  NW == null) {
-          points.add(p);
-          return true;
-        } else {
-          // split the node
-          split(this);
-          return false;
+        // inserts a point into the QuadTree
+
+        if (!bounds.containsPoint(p))
+            return false; // cannot add point, it's not in the bounds of this QuadTree
+
+        if (points.size() < CAPACITY && NW == null) {
+            // we haven't filled the quad yet, add it here
+            points.add(p);
+            return true;
+        } 
+
+        if (NW == null) { // and points is full...
+   
+            // split the quad, it's full. If it has sub-quads, the size is zero, since we rebalance in split()
+            // i.e. Quads with children have no points of their own.
+            split(this);
         }
+
+        if (NW.insert(p)) return true;
+        if (NE.insert(p)) return true;
+        if (SW.insert(p)) return true;
+        if (SE.insert(p)) return true;
+
+        return false;
     }
 
     public void split(QuadTree qt) {
-        System.out.println("splitting: " + this.bounds);
-        NW = new QuadTree(new BoundingBox(new Point(0,0), 400, 300), 4);
-        SW = new QuadTree(new BoundingBox(new Point(0,0), 400, 300), 4);
-        NE = new QuadTree(new BoundingBox(new Point(0,0), 400, 300), 4);
-        SE = new QuadTree(new BoundingBox(new Point(0,0), 400, 300), 4);
-        
+//        System.out.println("splitting: " + this.bounds);
+
+        int bx = bounds.origin.x;
+        int by = bounds.origin.y;
+        int bw = bounds.width;
+        int bh = bounds.height;
+
+        // create the 4 new QuadTrees 
+        NW = new QuadTree(new BoundingBox(new Point(bx, by), bw/2, bh/2), 4);
+        SW = new QuadTree(new BoundingBox(new Point(bx, by + bh/2), bw/2, bh/2), 4);
+        NE = new QuadTree(new BoundingBox(new Point(bx + bw/2, by), bw/2, bh/2), 4);
+        SE = new QuadTree(new BoundingBox(new Point(bx + bw/2, by + bh/2), bw/2, bh/2), 4);
+
+        // redistribute this quads points to the new child quads
+        int count = 0;
+        for (Point p : points) {
+            if (NW.bounds.containsPoint(p)) {
+                NW.points.add(p);
+                count+=1;
+            }
+            if (NE.bounds.containsPoint(p)) {
+                NE.points.add(p);
+                count+=1;
+            }
+            if (SW.bounds.containsPoint(p)) {
+                SW.points.add(p);
+                count+=1;
+            }
+            if (SE.bounds.containsPoint(p)) {
+                SE.points.add(p);
+                count+=1;
+            }
+                
+        }
+
+        points.clear(); // the points are all now in the child quads
+        System.out.println("I moved " + count + " points");
+
+
     }
 
     public int remove(int idx) {
@@ -58,9 +101,16 @@ class QuadTree {
 
     public String toString() {
         String output = "";
+        output += "Origin: " + bounds.origin + ", width: " + bounds.width + ", height: " + bounds.height + ", points: ";
         for (Point p : points) {
-            //System.out.println(p);
             output += p + ", ";
+        }
+        output += "\n";
+        if (NW != null) {
+            output += NW +"\n";
+            output += NE +"\n";
+            output += SW +"\n";
+            output += SE +"\n";
         }
         return output;
     }

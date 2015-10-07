@@ -11,7 +11,11 @@ class BoundingBox {
     }
                                                                                       
     public boolean containsPoint(Point p) {
-        return true;
+        if (p.x >= origin.x && p.x < origin.x+width && p.y >= origin.y && p.y < origin.y+height) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String toString() {
