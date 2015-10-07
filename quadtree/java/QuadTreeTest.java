@@ -1,14 +1,17 @@
 public class QuadTreeTest {
  
     public static void main(String[] args) {
-        QuadTree qt = new QuadTree(new AABB(new Point(0,0), 5));
+        QuadTree qt = new QuadTree(new BoundingBox(new Point(0,0), 800, 600), 4);
  
-        // insert elements to QuadTree
-        qt.insert(new Point(1,1));
-        qt.insert(new Point(2,3));
-        qt.insert(new Point(-4,1));
-        qt.insert(new Point(2,1));
-        qt.insert(new Point(3,4));
+        // insert elements to QuadTree, these go at the top level
+        System.out.println(qt.insert(new Point(100,100)));
+        System.out.println(qt.insert(new Point(200,300)));
+        System.out.println(qt.insert(new Point(400,100)));
+        System.out.println(qt.insert(new Point(200,100)));
+        System.out.println(qt.insert(new Point(300,400)));
+
+        // this one causes a tree split
+        System.out.println(qt.insert(new Point(-300,200)));
  
         System.out.println("qt - print QuadTree: " + qt);
         //System.out.println("qt.size() - print QuadTree size: " + qt.size());
