@@ -93,6 +93,23 @@ class QuadTree {
 
     }
 
+    public ArrayList<Point> query(BoundingBox box) {
+        // return a list of all the points which are inside the bounding box
+        // recurse into sub-quads
+        points = new ArrayList<Point>();
+
+        if (box.overlaps(bounds)) {
+            // there may be interesting points
+            if (NW == null) {
+                // must be a "container" quad
+            }
+        }
+
+        return points;
+        
+        
+    }
+
     public int remove(int idx) {
         // remove item at given index
         int success=0;

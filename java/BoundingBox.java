@@ -18,6 +18,23 @@ class BoundingBox {
         }
     }
 
+    public boolean overlaps(BoundingBox box) {
+        // Test if the supplied bounding box and this bounding box overlap
+        int left = this.origin.x;
+        int right = this.origin.x + this.width;
+        int top = this.origin.y;
+        int bottom = this.origin.y + this.height;
+
+        if ((box.origin.x > right) ||
+            (box.origin.x+box.width < left) ||
+            (box.origin.y > bottom) ||
+            (box.origin.y+box.height  < top)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public String toString() {
         String output = "";
         output += "Origin: " + origin + ", width: " + width + ", height: " + height;
