@@ -90,23 +90,35 @@ class QuadTree {
         points.clear(); // the points are all now in the child quads
         System.out.println("I moved " + count + " points");
 
-
     }
 
     public ArrayList<Point> query(BoundingBox box) {
         // return a list of all the points which are inside the bounding box
         // recurse into sub-quads
-        points = new ArrayList<Point>();
 
-        if (box.overlaps(bounds)) {
-            // there may be interesting points
-            if (NW == null) {
-                // must be a "container" quad
+        ArrayList<Point> pointsInRange = new ArrayList<Point>();
+
+        if (!box.overlaps(bounds)) {
+            return pointsInRange;
+        }
+
+        for (Point p : points) {
+            if (box.containsPoint(p)) {
+                pointsInRange.add(p);
+                System.out.println(box + " contains " + p);
             }
         }
 
-        return points;
-        
+        if (NW == null) {
+            return pointsInRange;
+        }
+
+        pointsInRange.addAll(NW.query(box));
+        pointsInRange.addAll(NE.query(box));
+        pointsInRange.addAll(SW.query(box));
+        pointsInRange.addAll(SE.query(box));
+
+        return pointsInRange;
         
     }
 

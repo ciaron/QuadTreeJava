@@ -5,21 +5,19 @@ public class QuadTreeTest {
     public static void main(String[] args) {
         QuadTree qt = new QuadTree(new BoundingBox(new Point(0,0), 800, 600), 4);
  
-        // insert elements to QuadTree, these go at the top level
-        qt.insert(new Point(100,100));  //
-        qt.insert(new Point(200,300));  //
-        qt.insert(new Point(400,100));
-        qt.insert(new Point(200,100));
+        qt.insert(new Point(150, 100));
+        qt.insert(new Point(160, 280));
+        qt.insert(new Point(170, 260));
+        qt.insert(new Point(180, 240));
+        qt.insert(new Point(190, 200));
 
-        // this one causes a tree split
-        qt.insert(new Point(500,400)); // SE
+        qt.insert(new Point(10,100));
 
-        // this one should go into SW
-        qt.insert(new Point(301,240)); //
-        qt.insert(new Point(10, 360)); //
-        qt.insert(new Point(10, 360)); //
-        qt.insert(new Point(20, 360)); //
-        qt.insert(new Point(30, 360)); //
+        qt.insert(new Point(450, 550));
+        qt.insert(new Point(450, 500));
+        qt.insert(new Point(750, 10));
+        qt.insert(new Point(50, 200));
+        qt.insert(new Point(150, 400));
  
         System.out.println("QuadTree: " + qt);
         //System.out.println("qt.size() - print QuadTree size: " + qt.size());
@@ -31,8 +29,8 @@ public class QuadTreeTest {
 
 
         ArrayList<Point> points = new ArrayList<Point>();
-        points = qt.query(new BoundingBox(new Point(110, 110), 300, 300));
-        System.out.println(new BoundingBox(new Point(0, 0), 100, 100).overlaps(new BoundingBox(new Point(50, 50), 300, 300)));
+        points = qt.query(new BoundingBox(new Point(120, 150), 130, 300));
+        //System.out.println(new BoundingBox(new Point(0, 0), 100, 100).overlaps(new BoundingBox(new Point(50, 50), 300, 300)));
         System.out.println("points: " + points);
 
     }
