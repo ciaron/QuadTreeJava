@@ -27,8 +27,10 @@ class QuadTree {
 
         // inserts a point into the QuadTree
 
-        if (!bounds.containsPoint(p))
+        if (!bounds.containsPoint(p)) {
+            //System.out.println("cannot add point, it's not in the bounds of QuadTree" + this + p);
             return false; // cannot add point, it's not in the bounds of this QuadTree
+        }
 
         if (points.size() < CAPACITY && NW == null) {
             // we haven't filled the quad yet, add it here
@@ -130,10 +132,11 @@ class QuadTree {
 
     public String toString() {
         String output = "";
-        output += "Origin: " + bounds.origin + ", width: " + bounds.width + ", height: " + bounds.height + ", points: ";
-        for (Point p : points) {
-            output += p + ", ";
-        }
+        //output += bounds.origin + " : " + bounds.width + "x" + bounds.height + ", points: ";
+        output += bounds.origin + " : " + bounds.width + "x" + bounds.height;
+        //for (Point p : points) {
+        //    output += p + ", ";
+        //}
         output += "\n";
         if (NW != null) {
             output += NW +"\n";
