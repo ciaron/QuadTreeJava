@@ -5,6 +5,8 @@ public class QuadTreeTest {
     public static void main(String[] args) {
         QuadTree qt = new QuadTree(new BoundingBox(new Point(0,0), 800, 600), 4);
  
+        qt.insert(new Point(1500, 100));
+
         qt.insert(new Point(150, 100));
         qt.insert(new Point(160, 280));
         qt.insert(new Point(170, 260));
@@ -19,7 +21,7 @@ public class QuadTreeTest {
         qt.insert(new Point(50, 200));
         qt.insert(new Point(150, 400));
  
-        System.out.println("QuadTree: " + qt);
+//        System.out.println("QuadTree: " + qt);
         //System.out.println("qt.size() - print QuadTree size: " + qt.size());
         //System.out.println("qt.get(3) - get element 3: " + qt.get(3));
         //System.out.println("qt.remove(2) - remove 3rd element: " + qt.remove(2));
