@@ -105,7 +105,7 @@ class QuadTree {
         for (Point p : points) {
             if (box.containsPoint(p)) {
                 pointsInRange.add(p);
-                System.out.println(box + " contains " + p);
+                System.out.println(p + " is in box " + box);
             }
         }
 
