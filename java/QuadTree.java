@@ -21,9 +21,15 @@ class QuadTree {
         SE = null;
         CAPACITY = capacity;
         bounds = _bounds;
+
+        // TODO: add parent QuadTree here? Useful for removals?
     }
 
     public boolean insert(Point p) {
+
+        // special test case:
+        if (p.x == 151) p.x = 152;
+        // the object here /is/ the object added, not a copy!
 
         // inserts a point into the QuadTree
 
@@ -92,6 +98,22 @@ class QuadTree {
         points.clear(); // the points are all now in the child quads
         System.out.println("I moved " + count + " points");
 
+    }
+    
+    public QuadTree findQuadTree(Point _p) {
+        // find the QuadTree that holds this point
+        for (Point p : points) {
+            if (p == _p) return this;
+        }
+
+        if (NW != null) {
+            if (null != NW.findQuadTree(_p)) return NW;
+            if (null != SE.findQuadTree(_p)) return SE;
+            if (null != SW.findQuadTree(_p)) return SW;
+            if (null != NE.findQuadTree(_p)) return NE;
+        }
+
+        return null;
     }
 
     public ArrayList<Point> query(BoundingBox box) {
