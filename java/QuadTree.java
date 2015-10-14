@@ -14,6 +14,14 @@ class QuadTree {
 
     BoundingBox bounds;
 
+    public QuadTree(int x, int y, int width, int height, int capacity) {
+        NW = null;
+        SW = null;
+        NE = null;
+        SE = null;
+        CAPACITY = capacity;
+        bounds = new BoundingBox(new Point(x, y), width, height);
+    }
     public QuadTree(BoundingBox _bounds, int capacity) {
         NW = null;
         SW = null;

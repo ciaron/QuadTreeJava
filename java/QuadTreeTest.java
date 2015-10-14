@@ -3,7 +3,8 @@ import java.util.ArrayList;
 public class QuadTreeTest {
  
     public static void main(String[] args) {
-        QuadTree qt = new QuadTree(new BoundingBox(new Point(0,0), 800, 600), 4);
+        QuadTree qt = new QuadTree(new BoundingBox(new Point(0,0), 800, 600), 4); // one constructor
+        QuadTree qt2 = new QuadTree(0,0, 800, 600, 5); // other constructor
  
         qt.insert(new Point(1500, 100));
 
